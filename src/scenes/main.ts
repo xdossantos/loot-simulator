@@ -108,6 +108,10 @@ export class MainScene extends Phaser.Scene {
             playerBody.setVelocityX(-200);
         } else if (this.cursors.right.isDown) {
             playerBody.setVelocityX(200);
+        } else if (this.cursors.up.isDown) {
+            playerBody.setVelocityY(-200);
+        } else if (this.cursors.down.isDown) {
+            playerBody.setVelocityY(200);
         }
 
         if (this.fireKey.isDown) {
