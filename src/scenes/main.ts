@@ -1,17 +1,17 @@
-import { AssetType, SoundType } from "../interface/assets";
-import { Bullet } from "../interface/bullet";
-import { AssetManager } from "../interface/manager/asset-manager";
-import { EnemyManager} from "../interface/manager/enemy-manager";
-import { Looter } from "../interface/looter";
+import {AssetType, SoundType} from "../interface/assets";
+import {Bullet} from "../interface/bullet";
+import {AssetManager} from "../interface/manager/asset-manager";
+import {EnemyManager} from "../interface/manager/enemy-manager";
+import {Looter} from "../interface/looter";
 import {
     AnimationFactory,
     AnimationType,
 } from "../interface/factory/animation-factory";
-import { Enemy } from "../interface/enemy";
-import { Kaboom } from "../interface/kaboom";
-import { EnemyBullet } from "../interface/enemy-bullet";
-import { ScoreManager } from "../interface/manager/score-manager";
-import { GameState } from "../interface/game-state";
+import {Enemy} from "../interface/enemy";
+import {Kaboom} from "../interface/kaboom";
+import {EnemyBullet} from "../interface/enemy-bullet";
+import {ScoreManager} from "../interface/manager/score-manager";
+import {GameState} from "../interface/game-state";
 
 export class MainScene extends Phaser.Scene {
     state: GameState;
@@ -24,12 +24,9 @@ export class MainScene extends Phaser.Scene {
     player: Phaser.Physics.Arcade.Sprite;
     player2: Phaser.Physics.Arcade.Sprite;
     enemyManager: EnemyManager;
-    cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    player1Controls: Phaser.Types.Input.Keyboard.CursorKeys;
     player2Controls: Phaser.Types.Input.Keyboard.CursorKeys;
-    keyA;
-    keyS;
-    keyD;
-    keyW;
+
     fireKey: Phaser.Input.Keyboard.Key;
 
     constructor() {
@@ -66,17 +63,19 @@ export class MainScene extends Phaser.Scene {
             .setOrigin(0, 0);
         this.assetManager = new AssetManager(this);
         this.animationFactory = new AnimationFactory(this);
-        this.cursors = this.input.keyboard.createCursorKeys();
-        // this.player2Controls = this.input.keyboard.addKeys({ 'up': Phaser.Input.Keyboard.KeyCodes.W, 'down': Phaser.Input.Keyboard.KeyCodes.S });
-        this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.player1Controls = this.input.keyboard.createCursorKeys();
+        this.player2Controls = this.input.keyboard.addKeys({
+            'left': Phaser.Input.Keyboard.KeyCodes.A,
+            'up': Phaser.Input.Keyboard.KeyCodes.W,
+            'right': Phaser.Input.Keyboard.KeyCodes.D,
+            'down': Phaser.Input.Keyboard.KeyCodes.S
+        });
+
         this.fireKey = this.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );
         this.player = Looter.create(this);
-        this.player2 = Looter.create(this);
+        this.player2 = Looter.create(this, 1);
 
         this.enemyManager = new EnemyManager(this);
         this.scoreManager = new ScoreManager(this);
@@ -128,33 +127,23 @@ export class MainScene extends Phaser.Scene {
         let player2Body = this.player2.body as Phaser.Physics.Arcade.Body;
         player2Body.setVelocity(0, 0);
 
-        if (this.cursors.left.isDown) {
+        if (this.player1Controls.left.isDown) {
             playerBody.setVelocityX(-200);
-        } else if (this.cursors.right.isDown) {
+        } else if (this.player1Controls.right.isDown) {
             playerBody.setVelocityX(200);
-        } else if (this.cursors.up.isDown) {
+        } else if (this.player1Controls.up.isDown) {
             playerBody.setVelocityY(-200);
-        } else if (this.cursors.down.isDown) {
+        } else if (this.player1Controls.down.isDown) {
             playerBody.setVelocityY(200);
         }
 
-        // if (this.player2Controls.left.isDown) {
-        //     player2Body.setVelocityX(-200);
-        // } else if (this.cursors.right.isDown) {
-        //     player2Body.setVelocityX(200);
-        // } else if (this.cursors.up.isDown) {
-        //     player2Body.setVelocityY(-200);
-        // } else if (this.cursors.down.isDown) {
-        //     player2Body.setVelocityY(200);
-        // }
-
-        if(this.keyA.isDown) {
+        if (this.player2Controls.left.isDown) {
             player2Body.setVelocityX(-200);
-        } else if(this.keyD.isDown) {
+        } else if (this.player2Controls.right.isDown) {
             player2Body.setVelocityX(200);
-        } else if(this.keyW.isDown) {
+        } else if (this.player2Controls.up.isDown) {
             player2Body.setVelocityY(-200);
-        } else if(this.keyS.isDown) {
+        } else if (this.player2Controls.down.isDown) {
             player2Body.setVelocityY(200);
         }
 
