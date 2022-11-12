@@ -51,7 +51,14 @@ export class MainScene extends Phaser.Scene {
             frameWidth: 32,
             frameHeight: 32,
         });
-        this.load.image(AssetType.Looter, "/images/player.png");
+
+        this.load.spritesheet(AssetType.Player1, "/images/redplayer1.png", {
+            frameWidth: 32,
+            frameHeight: 32,
+        });
+
+        // this.load.image(AssetType.Player1, "/images/player.png");
+
         this.load.spritesheet(AssetType.Kaboom, "/images/explode.png", {
             frameWidth: 128,
             frameHeight: 128,

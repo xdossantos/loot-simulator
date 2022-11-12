@@ -66,7 +66,7 @@ export class ScoreManager {
       let ship: Phaser.GameObjects.Sprite = this.lives.create(
         SIZE_X - 100 + 30 * i,
         60,
-        AssetType.Looter
+        AssetType.Player1
       );
       ship.setOrigin(0.5, 0.5);
       ship.setAngle(90);
