@@ -11,13 +11,13 @@ const config: Phaser.Types.Core.GameConfig = {
     physics: {
         default: "arcade"
     },
-    parent: "SpaceInvaders"
+    parent: "LootersSimulator"
 };
 
-class SpaceInvadersGame extends Phaser.Game {
+class LootersSimulator extends Phaser.Game {
     constructor(config: Phaser.Types.Core.GameConfig) {
         super(config)
     }
 }
 
-const game = new SpaceInvadersGame(config);
+const game = new LootersSimulator(config);

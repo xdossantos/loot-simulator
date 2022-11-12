@@ -1,13 +1,13 @@
 import { AssetType, SoundType } from "../interface/assets";
 import { Bullet } from "../interface/bullet";
 import { AssetManager } from "../interface/manager/asset-manager";
-import { AlienManager } from "../interface/manager/alien-manager";
-import { Ship } from "../interface/ship";
+import { EnemyManager} from "../interface/manager/enemy-manager";
+import { Looter } from "../interface/looter";
 import {
     AnimationFactory,
     AnimationType,
 } from "../interface/factory/animation-factory";
-import { Alien } from "../interface/alien";
+import { Enemy } from "../interface/enemy";
 import { Kaboom } from "../interface/kaboom";
 import { EnemyBullet } from "../interface/enemy-bullet";
 import { ScoreManager } from "../interface/manager/score-manager";
@@ -22,7 +22,7 @@ export class MainScene extends Phaser.Scene {
     firingTimer = 0;
     floorTiles: Phaser.GameObjects.TileSprite;
     player: Phaser.Physics.Arcade.Sprite;
-    alienManager: AlienManager;
+    enemyManager: EnemyManager;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     fireKey: Phaser.Input.Keyboard.Key;
 
@@ -35,13 +35,13 @@ export class MainScene extends Phaser.Scene {
     preload() {
         this.load.setBaseURL("/assets");
         this.load.image(AssetType.FloorTiles, "/images/floortiles.png");
-        this.load.image(AssetType.Bullet, "/images/bullet.png");
-        this.load.image(AssetType.EnemyBullet, "/images/enemy-bullet.png");
-        this.load.spritesheet(AssetType.Alien, "/images/invader.png", {
+        // this.load.image(AssetType.Bullet, "/images/bullet.png");
+        // this.load.image(AssetType.EnemyBullet, "/images/enemy-bullet.png");
+        this.load.spritesheet(AssetType.Enemy, "/images/invader.png", {
             frameWidth: 32,
             frameHeight: 32,
         });
-        this.load.image(AssetType.Ship, "/images/player.png");
+        this.load.image(AssetType.Looter, "/images/player.png");
         this.load.spritesheet(AssetType.Kaboom, "/images/explode.png", {
             frameWidth: 128,
             frameHeight: 128,
@@ -64,8 +64,8 @@ export class MainScene extends Phaser.Scene {
         this.fireKey = this.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );
-        this.player = Ship.create(this);
-        this.alienManager = new AlienManager(this);
+        this.player = Looter.create(this);
+        this.enemyManager = new EnemyManager(this);
         this.scoreManager = new ScoreManager(this);
 
         this.fireKey.on("down", () => {
@@ -80,15 +80,15 @@ export class MainScene extends Phaser.Scene {
 
     update() {
         this.floorTiles.tilePositionY -= 1;
-        this._shipKeyboardHandler();
+        this._looterKeyboardHandler();
         if (this.time.now > this.firingTimer) {
             this._enemyFires();
         }
 
         this.physics.overlap(
             this.assetManager.bullets,
-            this.alienManager.aliens,
-            this._bulletHitAliens,
+            this.enemyManager.enemies,
+            this._bulletHitEnemies,
             null,
             this
         );
@@ -101,7 +101,7 @@ export class MainScene extends Phaser.Scene {
         );
     }
 
-    private _shipKeyboardHandler() {
+    private _looterKeyboardHandler() {
         let playerBody = this.player.body as Phaser.Physics.Arcade.Body;
         playerBody.setVelocity(0, 0);
         if (this.cursors.left.isDown) {
@@ -115,12 +115,12 @@ export class MainScene extends Phaser.Scene {
         }
     }
 
-    private _bulletHitAliens(bullet: Bullet, alien: Alien) {
+    private _bulletHitEnemies(bullet: Bullet, enemy: Enemy) {
         let explosion: Kaboom = this.assetManager.explosions.get();
         bullet.kill();
-        alien.kill(explosion);
+        enemy.kill(explosion);
         this.scoreManager.increaseScore();
-        if (!this.alienManager.hasAliveAliens) {
+        if (!this.enemyManager.hasAliveEnemies) {
             this.scoreManager.increaseScore(1000);
             this.scoreManager.setWinText();
             this.state = GameState.Win;
@@ -151,7 +151,7 @@ export class MainScene extends Phaser.Scene {
             return;
         }
         let enemyBullet: EnemyBullet = this.assetManager.enemyBullets.get();
-        let randomEnemy = this.alienManager.getRandomAliveEnemy();
+        let randomEnemy = this.enemyManager.getRandomAliveEnemy();
         if (enemyBullet && randomEnemy) {
             enemyBullet.setPosition(randomEnemy.x, randomEnemy.y);
             this.physics.moveToObject(enemyBullet, this.player, 120);
@@ -178,7 +178,7 @@ export class MainScene extends Phaser.Scene {
         this.player.enableBody(true, this.player.x, this.player.y, true, true);
         this.scoreManager.resetLives();
         this.scoreManager.hideText();
-        this.alienManager.reset();
+        this.enemyManager.reset();
         this.assetManager.reset();
     }
 }
