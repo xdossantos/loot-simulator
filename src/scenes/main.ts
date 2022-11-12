@@ -57,6 +57,11 @@ export class MainScene extends Phaser.Scene {
             frameHeight: 32,
         });
 
+        this.load.spritesheet(AssetType.Player2, "/images/greenplayer2.png", {
+            frameWidth: 32,
+            frameHeight: 32,
+        });
+
         // this.load.image(AssetType.Player1, "/images/player.png");
 
         this.load.spritesheet(AssetType.Kaboom, "/images/explode.png", {
@@ -90,6 +95,7 @@ export class MainScene extends Phaser.Scene {
         );
         this.player = Looter.create(this);
         this.player2 = Looter.create(this, 1);
+
 
         this.enemyManager = new EnemyManager(this);
         this.scoreManager = new ScoreManager(this);

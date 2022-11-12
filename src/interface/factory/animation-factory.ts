@@ -2,6 +2,7 @@ import { AssetType } from "../assets";
 
 export enum AnimationType {
     Run = "run",
+    Loot = "loot",
     Kaboom = "kaboom"
 }
 
@@ -14,6 +15,26 @@ export class AnimationFactory {
         this._scene.anims.create({
             key: AnimationType.Run,
             frames: this._scene.anims.generateFrameNumbers(AssetType.Enemy, {
+                start: 0,
+                end: 3
+            }),
+            frameRate: 20,
+            repeat: -1
+        });
+
+        this._scene.anims.create({
+            key: AssetType.Player1,
+            frames: this._scene.anims.generateFrameNumbers(AssetType.Player1, {
+                start: 0,
+                end: 3
+            }),
+            frameRate: 20,
+            repeat: -1
+        });
+
+        this._scene.anims.create({
+            key: AssetType.Player2,
+            frames: this._scene.anims.generateFrameNumbers(AssetType.Player2, {
                 start: 0,
                 end: 3
             }),
