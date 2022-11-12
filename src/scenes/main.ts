@@ -22,8 +22,14 @@ export class MainScene extends Phaser.Scene {
     firingTimer = 0;
     floorTiles: Phaser.GameObjects.TileSprite;
     player: Phaser.Physics.Arcade.Sprite;
+    player2: Phaser.Physics.Arcade.Sprite;
     enemyManager: EnemyManager;
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    player2Controls: Phaser.Types.Input.Keyboard.CursorKeys;
+    keyA;
+    keyS;
+    keyD;
+    keyW;
     fireKey: Phaser.Input.Keyboard.Key;
 
     constructor() {
@@ -61,10 +67,17 @@ export class MainScene extends Phaser.Scene {
         this.assetManager = new AssetManager(this);
         this.animationFactory = new AnimationFactory(this);
         this.cursors = this.input.keyboard.createCursorKeys();
+        // this.player2Controls = this.input.keyboard.addKeys({ 'up': Phaser.Input.Keyboard.KeyCodes.W, 'down': Phaser.Input.Keyboard.KeyCodes.S });
+        this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.fireKey = this.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );
         this.player = Looter.create(this);
+        this.player2 = Looter.create(this);
+
         this.enemyManager = new EnemyManager(this);
         this.scoreManager = new ScoreManager(this);
 
@@ -99,11 +112,22 @@ export class MainScene extends Phaser.Scene {
             null,
             this
         );
+        this.physics.overlap(
+            this.assetManager.enemyBullets,
+            this.player2,
+            this._enemyBulletHitPlayer,
+            null,
+            this
+        );
     }
 
     private _looterKeyboardHandler() {
         let playerBody = this.player.body as Phaser.Physics.Arcade.Body;
         playerBody.setVelocity(0, 0);
+
+        let player2Body = this.player2.body as Phaser.Physics.Arcade.Body;
+        player2Body.setVelocity(0, 0);
+
         if (this.cursors.left.isDown) {
             playerBody.setVelocityX(-200);
         } else if (this.cursors.right.isDown) {
@@ -112,6 +136,26 @@ export class MainScene extends Phaser.Scene {
             playerBody.setVelocityY(-200);
         } else if (this.cursors.down.isDown) {
             playerBody.setVelocityY(200);
+        }
+
+        // if (this.player2Controls.left.isDown) {
+        //     player2Body.setVelocityX(-200);
+        // } else if (this.cursors.right.isDown) {
+        //     player2Body.setVelocityX(200);
+        // } else if (this.cursors.up.isDown) {
+        //     player2Body.setVelocityY(-200);
+        // } else if (this.cursors.down.isDown) {
+        //     player2Body.setVelocityY(200);
+        // }
+
+        if(this.keyA.isDown) {
+            player2Body.setVelocityX(-200);
+        } else if(this.keyD.isDown) {
+            player2Body.setVelocityX(200);
+        } else if(this.keyW.isDown) {
+            player2Body.setVelocityY(-200);
+        } else if(this.keyS.isDown) {
+            player2Body.setVelocityY(200);
         }
 
         if (this.fireKey.isDown) {
