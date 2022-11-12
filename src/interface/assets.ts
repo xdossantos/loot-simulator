@@ -5,6 +5,11 @@ export enum AssetType {
     Looter = "looter",
     Kaboom = "kaboom",
     FloorTiles = "floorTiles",
+    Banana = "banana",
+    Grapes = "grapes",
+    Koo = "koo",
+    Milk = "milk",
+    Omo = "omo"
 }
 
 export enum SoundType {

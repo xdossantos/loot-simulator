@@ -12,6 +12,7 @@ import {Kaboom} from "../interface/kaboom";
 import {EnemyBullet} from "../interface/enemy-bullet";
 import {ScoreManager} from "../interface/manager/score-manager";
 import {GameState} from "../interface/game-state";
+import { Aisle } from "../interface/aisle"
 
 export class MainScene extends Phaser.Scene {
     state: GameState;
@@ -26,7 +27,7 @@ export class MainScene extends Phaser.Scene {
     enemyManager: EnemyManager;
     player1Controls: Phaser.Types.Input.Keyboard.CursorKeys;
     player2Controls: Phaser.Types.Input.Keyboard.CursorKeys;
-
+    aisles: Array<Aisle>;
     fireKey: Phaser.Input.Keyboard.Key;
 
     constructor() {
@@ -40,6 +41,12 @@ export class MainScene extends Phaser.Scene {
         this.load.image(AssetType.FloorTiles, "/images/floortiles.png");
         this.load.image(AssetType.Bullet, "/images/bullet.png");
         this.load.image(AssetType.EnemyBullet, "/images/enemy-bullet.png");
+        this.load.image(AssetType.Banana, "/images/aisle/banana.png");
+        this.load.image(AssetType.Grapes, "/images/aisle/grapes.png");
+        this.load.image(AssetType.Koo, "/images/aisle/koo.png");
+        this.load.image(AssetType.Milk, "/images/aisle/milk.png");
+        this.load.image(AssetType.Omo, "/images/aisle/omo.png");
+
         this.load.spritesheet(AssetType.Enemy, "/images/invader.png", {
             frameWidth: 32,
             frameHeight: 32,
