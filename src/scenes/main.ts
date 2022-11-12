@@ -35,8 +35,8 @@ export class MainScene extends Phaser.Scene {
     preload() {
         this.load.setBaseURL("/assets");
         this.load.image(AssetType.FloorTiles, "/images/floortiles.png");
-        // this.load.image(AssetType.Bullet, "/images/bullet.png");
-        // this.load.image(AssetType.EnemyBullet, "/images/enemy-bullet.png");
+        this.load.image(AssetType.Bullet, "/images/bullet.png");
+        this.load.image(AssetType.EnemyBullet, "/images/enemy-bullet.png");
         this.load.spritesheet(AssetType.Enemy, "/images/invader.png", {
             frameWidth: 32,
             frameHeight: 32,

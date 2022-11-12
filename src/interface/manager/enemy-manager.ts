@@ -9,12 +9,12 @@ export class EnemyManager {
 
     constructor(private _scene: Phaser.Scene) {
         this.enemies = this._scene.physics.add.group({
-            maxSize: 3,
+            maxSize: 1,
             classType: Enemy,
             runChildUpdate: true
         });
         this.enemies.setOrigin(0, 0)
-        this._sortEnemies();
+        this._createEnemies();
         this._animate();
     }
 
@@ -25,22 +25,25 @@ export class EnemyManager {
     }
 
     reset() {
-        this._sortEnemies();
+        this._createEnemies();
         this._animate();
     }
 
-    private _sortEnemies() {
-        let ORIGIN_X = 100;
-        let ORIGIN_Y = 100;
+    private _createEnemies() {
+        let ORIGIN_X = 300;
+        let ORIGIN_Y = 550;
+        let x = 0;
+        let y = 0 ;
         this.enemies.clear(true, true);
-        for (let y = 0; y < 4; y++) {
-            for (let x = 0; x < 10; x++) {
+        // TODO: Figure out how to randomly add enemies
+        // for (let y = 0; y < 4; y++) {
+        //     for (let x = 0; x < 10; x++) {
                 let enemy: Enemy = this.enemies.create(ORIGIN_X + x * 48, ORIGIN_Y + y * 50);
                 enemy.setOrigin(0.5, 0.5);
                 enemy.play(AnimationType.Run)
                 enemy.setImmovable(false);
-            }
-        }
+        //     }
+        // }
     }
 
     private _animate() {
