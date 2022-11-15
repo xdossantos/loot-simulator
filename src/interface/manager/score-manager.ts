@@ -1,4 +1,4 @@
-import { AssetType } from "../assets";
+import {AssetType} from "../../lib/constants";
 
 export class ScoreManager {
   scoreText: Phaser.GameObjects.Text;

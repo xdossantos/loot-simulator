@@ -1,9 +1,10 @@
-import { AssetType } from "../assets";
+import {AssetType} from "../../lib/constants";
 
 export enum AnimationType {
     Run = "run",
     Loot = "loot",
-    Kaboom = "kaboom"
+    Kaboom = "kaboom",
+    AisleMove = "aisleMove"
 }
 
 export class AnimationFactory {

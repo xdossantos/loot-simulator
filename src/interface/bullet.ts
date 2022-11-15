@@ -1,4 +1,4 @@
-import { AssetType, SoundType } from "./assets";
+import {AssetType, SoundType} from "../lib/constants";
 
 export class Bullet extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene) {

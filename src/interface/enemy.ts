@@ -1,6 +1,6 @@
-import { AssetType, SoundType } from "./assets";
 import { AnimationType } from "./factory/animation-factory";
 import { Kaboom } from "./kaboom";
+import {AssetType, SoundType} from "../lib/constants";
 
 export class Enemy extends Phaser.Physics.Arcade.Sprite {
   constructor(scene: Phaser.Scene, x: number, y: number) {
