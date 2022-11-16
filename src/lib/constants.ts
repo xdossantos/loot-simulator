@@ -9,8 +9,8 @@ export enum AssetType {
     Enemy = "enemy",
     Player1 = "player1",
     Player2 = "player2",
-    Aisle = "Aisle",
-    SplashScreen = "SplashScreen",
+    Aisle = "aisle",
+    SplashScreen = "splashScreen",
     Kaboom = "kaboom",
     FloorTiles = "floorTiles",
     Banana = "banana",
@@ -23,6 +23,8 @@ export enum AssetType {
 export enum SoundType {
     Kaboom = "kaboom",
     Shoot = "shoot",
+    MainSong = "mainSong",
+
     InvaderKilled = "invaderKilled",
     Pickup = "pickup",
     Slip = "slip",
