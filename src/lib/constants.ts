@@ -29,3 +29,17 @@ export enum SoundType {
     Background= "background",
     LoadShedding= "loadShedding",
 }
+
+export const textConfig = {
+    fontFamily: `'Arial', sans-serif`,
+    fill: "#ffffff",
+};
+export const normalTextConfig = {
+    ...textConfig,
+    fontSize: "16px",
+};
+
+export const bigTextConfig = {
+    ...textConfig,
+    fontSize: "36px",
+};

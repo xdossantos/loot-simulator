@@ -1,5 +1,6 @@
 import 'phaser';
-import { MainScene, Splash } from './scenes/main';
+import { MainScene} from './scenes/main';
+import {Splash} from "./scenes/splash";
 
 const config: Phaser.Types.Core.GameConfig = {
     title: "Looter Simulator",

@@ -2,47 +2,14 @@ import {Bullet} from "../interface/bullet";
 import {AssetManager} from "../interface/manager/asset-manager";
 import {EnemyManager} from "../interface/manager/enemy-manager";
 import {Looter} from "../interface/looter";
-import {
-    AnimationFactory,
-    AnimationType,
-} from "../interface/factory/animation-factory";
+import {AnimationFactory, AnimationType,} from "../interface/factory/animation-factory";
 import {Enemy} from "../interface/enemy";
 import {Kaboom} from "../interface/kaboom";
 import {EnemyBullet} from "../interface/enemy-bullet";
 import {ScoreManager} from "../interface/manager/score-manager";
 import {GameState} from "../interface/game-state";
-import {Scenes, AssetType, SoundType} from "../lib/constants";
+import {AssetType, Scenes, SoundType} from "../lib/constants";
 
-
-export class Splash extends Phaser.Scene {
-
-    splash : Phaser.GameObjects.Image;
-
-    constructor ()
-    {
-        super({ key: Scenes.SplashScreen });
-    }
-
-    preload ()
-    {
-        this.load.setBaseURL("/assets");
-        this.load.image(AssetType.SplashScreen, "/images/splash.png");
-    }
-
-    create ()
-    {
-        this.splash = this.add.image(0, 0, AssetType.SplashScreen).setOrigin(0,0)
-
-        this.input.manager.enabled = true;
-
-        this.input.once('pointerdown', function () {
-
-            this.scene.start('MainScene');
-
-        }, this);
-    }
-
-}
 
 export class MainScene extends Phaser.Scene {
     state: GameState;
