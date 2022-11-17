@@ -5,7 +5,7 @@ export class Splash extends Phaser.Scene {
 
     splash: Phaser.GameObjects.Image;
     textManager: TextManager;
-    sampleSound;
+    mainSong ;
 
 
 
@@ -26,7 +26,7 @@ export class Splash extends Phaser.Scene {
         this.textManager = new TextManager(this);
 
         // Add audio
-        this.sampleSound = this.sound.play(SoundType.MainSong, {
+        this.mainSong = this.sound.play(SoundType.MainSong, {
                 mute: false,
                 volume: 1,
                 rate: 1,
@@ -36,8 +36,6 @@ export class Splash extends Phaser.Scene {
                 delay: 0
             }
         );
-
-        // this.sampleSound = this.add.audio(SoundType.MainSong);
 
         this.input.manager.enabled = true;
 
