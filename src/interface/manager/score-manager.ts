@@ -1,4 +1,4 @@
-import { AssetType } from "../assets";
+import {AssetType, bigTextConfig, normalTextConfig} from "../../lib/constants";
 
 export class ScoreManager {
   scoreText: Phaser.GameObjects.Text;
@@ -20,19 +20,7 @@ export class ScoreManager {
 
   private _init() {
     const { width: SIZE_X, height: SIZE_Y } = this._scene.game.canvas;
-    const textConfig = {
-      fontFamily: `'Arial', sans-serif`,
-      fill: "#ffffff",
-    };
-    const normalTextConfig = {
-      ...textConfig,
-      fontSize: "16px",
-    };
 
-    const bigTextConfig = {
-      ...textConfig,
-      fontSize: "36px",
-    };
 
     this._scene.add.text(16, 16, `SCORE`, normalTextConfig);
     this.scoreText = this._scene.add.text(22, 32, "", normalTextConfig);

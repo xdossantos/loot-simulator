@@ -1,5 +1,6 @@
 import 'phaser';
-import { MainScene } from './scenes/main';
+import { MainScene} from './scenes/main';
+import {Splash} from "./scenes/splash";
 
 const config: Phaser.Types.Core.GameConfig = {
     title: "Looter Simulator",
@@ -7,7 +8,7 @@ const config: Phaser.Types.Core.GameConfig = {
     backgroundColor: 'rgb(47, 52, 55)',
     width: 800,
     height: 600,
-    scene: MainScene,
+    scene: [Splash, MainScene],
     physics: {
         default: "arcade"
     },

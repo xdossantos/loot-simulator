@@ -1,18 +1,15 @@
-import {AssetType, SoundType} from "../interface/assets";
 import {Bullet} from "../interface/bullet";
 import {AssetManager} from "../interface/manager/asset-manager";
 import {EnemyManager} from "../interface/manager/enemy-manager";
 import {Looter} from "../interface/looter";
-import {
-    AnimationFactory,
-    AnimationType,
-} from "../interface/factory/animation-factory";
+import {AnimationFactory, AnimationType,} from "../interface/factory/animation-factory";
 import {Enemy} from "../interface/enemy";
 import {Kaboom} from "../interface/kaboom";
 import {EnemyBullet} from "../interface/enemy-bullet";
 import {ScoreManager} from "../interface/manager/score-manager";
 import {GameState} from "../interface/game-state";
-import { Aisle } from "../interface/aisle"
+import {AssetType, Scenes, SoundType} from "../lib/constants";
+
 
 export class MainScene extends Phaser.Scene {
     state: GameState;
@@ -27,12 +24,12 @@ export class MainScene extends Phaser.Scene {
     enemyManager: EnemyManager;
     player1Controls: Phaser.Types.Input.Keyboard.CursorKeys;
     player2Controls: Phaser.Types.Input.Keyboard.CursorKeys;
-    aisles: Array<Aisle>;
+    aisles;
     fireKey: Phaser.Input.Keyboard.Key;
 
     constructor() {
         super({
-            key: "MainScene",
+            key: Scenes.MainScene,
         });
     }
 
@@ -41,11 +38,12 @@ export class MainScene extends Phaser.Scene {
         this.load.image(AssetType.FloorTiles, "/images/floortiles.png");
         this.load.image(AssetType.Bullet, "/images/bullet.png");
         this.load.image(AssetType.EnemyBullet, "/images/enemy-bullet.png");
-        this.load.image(AssetType.Banana, "/images/aisle/banana.png");
-        this.load.image(AssetType.Grapes, "/images/aisle/grapes.png");
-        this.load.image(AssetType.Koo, "/images/aisle/koo.png");
-        this.load.image(AssetType.Milk, "/images/aisle/milk.png");
-        this.load.image(AssetType.Omo, "/images/aisle/omo.png");
+        this.load.image(AssetType.Banana, "/images/shelf/banana.png");
+        this.load.image(AssetType.Aisle, "/images/shelf/shelf.png");
+        this.load.image(AssetType.Grapes, "/images/shelf/grapes.png");
+        this.load.image(AssetType.Koo, "/images/shelf/koo.png");
+        this.load.image(AssetType.Milk, "/images/shelf/milk.png");
+        this.load.image(AssetType.Omo, "/images/shelf/omo.png");
 
         this.load.spritesheet(AssetType.Enemy, "/images/invader.png", {
             frameWidth: 32,
