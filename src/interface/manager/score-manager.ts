@@ -4,10 +4,10 @@ export class ScoreManager {
   scoreText: Phaser.GameObjects.Text;
   line1Text: Phaser.GameObjects.Text;
   line2Text: Phaser.GameObjects.Text;
-  lives: Phaser.Physics.Arcade.Group;
+  player1coins: Phaser.Physics.Arcade.Group;
 
-  get noMoreLives() {
-    return this.lives.countActive(true) === 0;
+  get noMoreCoins() {
+    return this.player1coins.countActive(true) === 0;
   }
 
   highScore = 0;
@@ -32,26 +32,26 @@ export class ScoreManager {
       .text(SIZE_X / 2, 400, "", bigTextConfig)
       .setOrigin(0.5);
 
-    this._setLivesText(SIZE_X, normalTextConfig);
+    this._setCoinsText(SIZE_X, normalTextConfig);
   }
 
-  private _setLivesText(
+  private _setCoinsText(
     SIZE_X: number,
     textConfig: { fontSize: string; fontFamily: string; fill: string }
   ) {
-    this._scene.add.text(SIZE_X - 100, 16, `LIVES`, textConfig);
-    this.lives = this._scene.physics.add.group({
+    this._scene.add.text(SIZE_X - 100, 16, `COINS`, textConfig);
+    this.player1coins = this._scene.physics.add.group({
       maxSize: 3,
       runChildUpdate: true,
     });
-    this.resetLives();
+    this.resetCoins();
   }
 
-  resetLives() {
+  resetCoins() {
     let SIZE_X = this._scene.game.canvas.width;
-    this.lives.clear(true, true)
+    this.player1coins.clear(true, true)
     for (let i = 0; i < 3; i++) {
-      let ship: Phaser.GameObjects.Sprite = this.lives.create(
+      let ship: Phaser.GameObjects.Sprite = this.player1coins.create(
         SIZE_X - 100 + 30 * i,
         60,
         AssetType.Player1

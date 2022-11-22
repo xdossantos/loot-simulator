@@ -1,10 +1,11 @@
 import {AssetType} from "../lib/constants";
 
-export class Looter {
+export class Player {
     static create(scene: Phaser.Scene, playerCount: number = 0 ): Phaser.Physics.Arcade.Sprite {
-        let looter = scene.physics.add.sprite(450 - (playerCount * 150 ) , 500, AssetType.Player1);
-        looter.setCollideWorldBounds(true);
-        (playerCount === 0) ? looter.play(AssetType.Player1) : looter.play(AssetType.Player2);
-        return looter;
+        let player = scene.physics.add.sprite(450 - (playerCount * 150 ) , 500, AssetType.Player1);
+        player.setCollideWorldBounds(true);
+        const playerConfig = [AssetType.Player1, AssetType.Player2]
+        player.play(playerConfig[playerCount]);
+        return player;
     }
 }

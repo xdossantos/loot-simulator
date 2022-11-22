@@ -41,7 +41,7 @@ export class Splash extends Phaser.Scene {
 
         this.input.once('pointerdown', function () {
 
-            this.scene.start('MainScene');
+            this.scene.start(Scenes.MainScene);
 
         }, this);
 

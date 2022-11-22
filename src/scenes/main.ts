@@ -1,7 +1,7 @@
 import {Bullet} from "../interface/bullet";
 import {AssetManager} from "../interface/manager/asset-manager";
 import {EnemyManager} from "../interface/manager/enemy-manager";
-import {Looter} from "../interface/looter";
+import {Player} from "../interface/looter";
 import {AnimationFactory, AnimationType,} from "../interface/factory/animation-factory";
 import {Enemy} from "../interface/enemy";
 import {Kaboom} from "../interface/kaboom";
@@ -91,8 +91,8 @@ export class MainScene extends Phaser.Scene {
         this.fireKey = this.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );
-        this.player = Looter.create(this);
-        this.player2 = Looter.create(this, 1);
+        this.player = Player.create(this);
+        this.player2 = Player.create(this, 1);
 
 
         this.enemyManager = new EnemyManager(this);
@@ -115,24 +115,40 @@ export class MainScene extends Phaser.Scene {
             this._enemyFires();
         }
 
+        // this.physics.overlap(
+        //     this.assetManager.bullets,
+        //     this.enemyManager.enemies,
+        //     this._bulletHitEnemies,
+        //     null,
+        //     this
+        // );
+        // this.physics.overlap(
+        //     this.assetManager.enemyBullets,
+        //     this.player,
+        //     this._copHitPlayer,
+        //     null,
+        //     this
+        // );
+        //
+        // this.physics.overlap(
+        //     this.assetManager.enemyBullets,
+        //     this.player2,
+        //     this._copHitPlayer,
+        //     null,
+        //     this
+        // );
+
         this.physics.overlap(
-            this.assetManager.bullets,
             this.enemyManager.enemies,
-            this._bulletHitEnemies,
-            null,
-            this
-        );
-        this.physics.overlap(
-            this.assetManager.enemyBullets,
             this.player,
-            this._enemyBulletHitPlayer,
+            this._copHitPlayer,
             null,
             this
         );
         this.physics.overlap(
-            this.assetManager.enemyBullets,
+            this.enemyManager.enemies,
             this.player2,
-            this._enemyBulletHitPlayer,
+            this._copHitPlayer,
             null,
             this
         );
@@ -182,18 +198,18 @@ export class MainScene extends Phaser.Scene {
         }
     }
 
-    private _enemyBulletHitPlayer(ship, enemyBullet: EnemyBullet) {
+    private _copHitPlayer(ship, enemyBullet: EnemyBullet) {
         let explosion: Kaboom = this.assetManager.explosions.get();
-        enemyBullet.kill();
-        let live: Phaser.GameObjects.Sprite = this.scoreManager.lives.getFirstAlive();
-        if (live) {
-            live.setActive(false).setVisible(false);
+        let coin: Phaser.GameObjects.Sprite = this.scoreManager.player1coins.getFirstAlive();
+        if (coin) {
+            coin.setActive(false).setVisible(false);
         }
 
         explosion.setPosition(this.player.x, this.player.y);
         explosion.play(AnimationType.Kaboom);
         this.sound.play(SoundType.Kaboom)
-        if (this.scoreManager.noMoreLives) {
+
+        if (this.scoreManager.noMoreCoins) {
             this.scoreManager.setGameOverText();
             this.assetManager.gameOver();
             this.state = GameState.GameOver;
@@ -231,7 +247,7 @@ export class MainScene extends Phaser.Scene {
     restart() {
         this.state = GameState.Playing;
         this.player.enableBody(true, this.player.x, this.player.y, true, true);
-        this.scoreManager.resetLives();
+        this.scoreManager.resetCoins();
         this.scoreManager.hideText();
         this.enemyManager.reset();
         this.assetManager.reset();
